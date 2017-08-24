@@ -56,5 +56,44 @@
     }
   };
 
-  // ADD YOUR CODE HERE
+  $('.btn-large').click(function(){
+
+    event.preventDefault()
+
+    if ($('#search').val() === '') {
+     window.alert('What movie are you looking for?')
+
+   }
+   else {
+
+    let query = $('#search').val().toLowerCase()
+
+    query = '?s='+query.replace(/[\s]/g, '%20')
+
+    let $xhr = $.getJSON(`https://omdb-api.now.sh/${query}`)
+
+    $('#search').val('')
+
+    $xhr.done(function(data){
+      if($xhr.status !==200) {
+        return;
+      }
+
+      let result = data.Search
+
+      for (let index in result){
+
+        let movie = {
+          id: result[index].imdbID,
+          poster: result[index].Poster,
+          title: result[index].Title,
+          year: result[index].Year
+        }
+        movies.push(movie)
+      }
+      renderMovies()
+    })
+    }
+  })
+
 })();
