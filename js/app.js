@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  const movies = [];
+  let movies = [];
 
   const renderMovies = function() {
     $('#listings').empty();
@@ -60,11 +60,14 @@
 
     event.preventDefault()
 
-    if ($('#search').val() === '') {
-     window.alert('What movie are you looking for?')
+    if (movies.length > 0) {
+      movies = []
+      renderMovies()
+    }
 
-   }
-   else {
+    if ($('#search').val() === ''){
+      window.alert('What movie are you looking for?')
+    }
 
     let query = $('#search').val().toLowerCase()
 
@@ -93,7 +96,6 @@
       }
       renderMovies()
     })
-    }
   })
 
 })();
